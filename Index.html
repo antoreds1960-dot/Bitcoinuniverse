@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>BitcoinUniverse · Lista Faucet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0b0e14;
+            color: #e8edf5;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #131a24;
+            border-radius: 28px;
+            padding: 40px 36px;
+            border: 1px solid #2a3546;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        /* ----- HEADER ----- */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 6px;
+        }
+        .header .logo {
+            font-size: 2.6rem;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f7931a, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .sottotitolo {
+            color: #9aaec9;
+            margin-bottom: 28px;
+            padding-left: 20px;
+            border-left: 4px solid #f7931a;
+            padding-left: 18px;
+        }
+
+        /* ----- CONTATORE VISITE ----- */
+        .contatore-box {
+            background: linear-gradient(135deg, #1a2535, #0f1722);
+            border-radius: 16px;
+            padding: 16px 24px;
+            margin-bottom: 28px;
+            border: 1px solid #2a384b;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        .contatore-box .stat {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .contatore-box .stat .etichetta {
+            font-size: 0.8rem;
+            color: #8aa1c4;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .contatore-box .stat .numero {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f7931a;
+            font-variant-numeric: tabular-nums;
+            transition: 0.2s;
+        }
+        .contatore-box .stat .numero.animato {
+            transform: scale(1.1);
+            color: #ffb347;
+        }
+        .contatore-box .badge-online {
+            background: #00c85320;
+            color: #00e676;
+            font-size: 0.7rem;
+            padding: 4px 16px;
+            border-radius: 40px;
+            border: 1px solid #00e67640;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .contatore-box .badge-online .pallino {
+            width: 8px;
+            height: 8px;
+            background: #00e676;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.4; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.4; transform: scale(0.9); }
+        }
+
+        /* ----- DISCLAIMER ----- */
+        .disclaimer {
+            background: #1f2a3a;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 30px;
+            border: 1px solid #2f3d52;
+            font-size: 0.9rem;
+            color: #cbd8ec;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+        .disclaimer .icona {
+            font-size: 1.5rem;
+        }
+        .disclaimer strong {
+            color: #f7b731;
+        }
+
+        /* ----- LISTA FAUCET (con icone) ----- */
+        .faucet-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin: 24px 0 30px;
+        }
+        .faucet-card {
+            background: #0f1722;
+            border-radius: 16px;
+            padding: 18px 22px;
+            border: 1px solid #263140;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            transition: 0.2s;
+        }
+        .faucet-card:hover {
+            border-color: #f7931a;
+            background: #151f2d;
+        }
+        .faucet-info {
+            flex: 2 1 200px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .faucet-info .icona-sito {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            background: #1e2b3d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 1px solid #2d3d55;
+            overflow: hidden;
+        }
+        .faucet-info .icona-sito img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .faucet-info .testo {
+            flex: 1;
+        }
+        .faucet-info .testo .nome {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .faucet-info .testo .nome:hover {
+            color: #f7931a;
+        }
+        .faucet-info .testo .desc {
+            font-size: 0.85rem;
+            color: #b0c4df;
+            margin-top: 3px;
+        }
+        .faucet-info .testo .tags {
+            margin-top: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .faucet-info .testo .tags span {
+            background: #1e2b3d;
+            color: #b8cef0;
+            font-size: 0.6rem;
+            padding: 2px 12px;
+            border-radius: 30px;
+            border: 1px solid #2d3d55;
+        }
+        .faucet-info .testo .tags .top {
+            background: #f7931a20;
+            border-color: #f7931a60;
+            color: #f7931a;
+        }
+        .faucet-card .btn {
+            background: #f7931a;
+            color: #0b0e14;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 7px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            flex-shrink: 0;
+        }
+        .faucet-card .btn:hover {
+            background: #ffa726;
+            transform: scale(1.03);
+        }
+
+        /* ----- STATO VUOTO ----- */
+        .vuoto {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6d83a3;
+            border: 2px dashed #2a3546;
+            border-radius: 16px;
+            margin: 10px 0;
+        }
+        .vuoto .emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .vuoto strong {
+            color: #f7931a;
+        }
+
+        /* ----- FOOTER ----- */
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #23303f;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #6d83a3;
+        }
+        .footer a {
+            color: #9bb1d0;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: #f7931a;
+        }
+        .footer .update {
+            background: #1a2535;
+            padding: 3px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            border: 1px solid #2d3d55;
+        }
+
+        @media (max-width: 650px) {
+            .container { padding: 24px 18px; }
+            .header h1 { font-size: 1.5rem; }
+            .faucet-card { flex-direction: column; align-items: stretch; gap: 12px; }
+            .faucet-card .btn { align-self: flex-start; }
+            .footer { flex-direction: column; gap: 10px; text-align: center; }
+            .contatore-box { flex-direction: column; align-items: stretch; text-align: center; }
+            .contatore-box .stat { justify-content: center; }
+            .faucet-info { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <span class="logo">⚡</span>
+        <h1>BitcoinUniverse</h1>
+    </div>
+    <div class="sottotitolo">
+        Lista selezionata di faucet e piattaforme crypto — aggiornata al 2026
+    </div>
+
+    <!-- CONTATORE VISITE -->
+    <div class="contatore-box">
+        <div class="stat">
+            <span class="etichetta">👁️ Oggi</span>
+            <span class="numero" id="contatoreOggi">0</span>
+            <span style="color:#6d83a3; font-size:0.8rem;">visite</span>
+        </div>
+        <div class="stat">
+            <span class="etichetta">📊 Totale</span>
+            <span class="numero" id="contatoreTotale">0</span>
+            <span style="color:#6d83a3; font-size:0.8rem;">visite</span>
+        </div>
+        <div class="badge-online">
+            <span class="pallino"></span>
+            <span>Live</span>
+        </div>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="disclaimer">
+        <span class="icona">🛡️</span>
+        <div>
+            <strong>Attenzione:</strong> I faucet danno ricompense minime. Non investire mai cifre che non puoi perdere.
+            Verifica sempre i minimi di prelievo. Lista informativa, non consulenza finanziaria.
+        </div>
+    </div>
+
+    <!-- ELENCO FAUCET (CARICATO DA JSON) -->
+    <div id="faucetContainer">
+        <div class="vuoto" id="messaggioVuoto">
+            <span class="emoji">🪙</span>
+            <p><strong>Nessun faucet ancora inserito.</strong></p>
+            <p style="font-size:0.9rem; margin-top:6px;">Modifica il file <code style="background:#1f2a3a; padding:2px 10px; border-radius:6px;">faucet.json</code> per aggiungere i tuoi siti.</p>
+        </div>
+        <div id="faucetList" style="display:none;"></div>
+    </div>
+
+    <!-- CONSIGLI -->
+    <div style="background:#0f1722; border-radius:14px; padding:18px 22px; margin:24px 0 16px; border:1px solid #2a384b;">
+        <p style="color:#c9d9ef; font-size:0.9rem;">
+            💡 <strong style="color:#f7931a;">Consiglio:</strong> Concentrati su 1–2 faucet, usa un wallet esterno e 
+            segnalami se un sito smette di pagare per aggiornare la lista.
+        </p>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <span>© 2026 BitcoinUniverse · <a href="#">Disclaimer</a></span>
+        <span class="update">📆 Aggiornato: 10 luglio 2026</span>
+    </div>
+
+</div>
+
+<script>
+    // ============================================================
+    //  CONTATORE VISITE (con localStorage)
+    // ============================================================
+    (function() {
+        let dati = localStorage.getItem('contatoreBitcoinUniverse');
+        if (dati) {
+            dati = JSON.parse(dati);
+        } else {
+            dati = {
+                totale: 0,
+                oggi: 0,
+                dataUltimoReset: new Date().toDateString()
+            };
+        }
+
+        const oggi = new Date().toDateString();
+        if (dati.dataUltimoReset !== oggi) {
+            dati.oggi = 0;
+            dati.dataUltimoReset = oggi;
+        }
+
+        dati.totale += 1;
+        dati.oggi += 1;
+
+        localStorage.setItem('contatoreBitcoinUniverse', JSON.stringify(dati));
+
+        const elTotale = document.getElementById('contatoreTotale');
+        const elOggi = document.getElementById('contatoreOggi');
+
+        elTotale.textContent = dati.totale;
+        elOggi.textContent = dati.oggi;
+
+        setTimeout(() => {
+            elTotale.classList.add('animato');
+            elOggi.classList.add('animato');
+        }, 100);
+        setTimeout(() => {
+            elTotale.classList.remove('animato');
+            elOggi.classList.remove('animato');
+        }, 400);
+    })();
+
+    // ============================================================
+    //  CARICAMENTO FAUCET DA JSON (con supporto icone)
+    // ============================================================
+    fetch('faucet.json')
+        .then(response => {
+            if (!response.ok) {
+                document.getElementById('messaggioVuoto').style.display = 'block';
+                document.getElementById('faucetList').style.display = 'none';
+                throw new Error('File faucet.json non trovato');
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('messaggioVuoto').style.display = 'none';
+            
+            const listContainer = document.getElementById('faucetList');
+            listContainer.style.display = 'flex';
+            listContainer.style.flexDirection = 'column';
+            listContainer.style.gap = '14px';
+            listContainer.innerHTML = '';
+
+            if (!data || data.length === 0) {
+                document.getElementById('messaggioVuoto').style.display = 'block';
+                return;
+            }
+
+            data.forEach(faucet => {
+                const card = document.createElement('div');
+                card.className = 'faucet-card';
+
+                let tagsHtml = '';
+                if (faucet.tags && faucet.tags.length > 0) {
+                    faucet.tags.forEach(tag => {
+                        const isTop = tag.toLowerCase().includes('top') || tag.includes('⭐');
+                        tagsHtml += `<span class="${isTop ? 'top' : ''}">${tag}</span>`;
+                    });
+                }
+
+                // Gestione icona: se è un'immagine la mostro, altrimenti uso emoji
+                let iconaHtml = '';
+                if (faucet.icona) {
+                    if (faucet.icona.startsWith('http') || faucet.icona.startsWith('/')) {
+                        // È un URL immagine
+                        iconaHtml = `<img src="${faucet.icona}" alt="${faucet.nome}" loading="lazy" />`;
+                    } else {
+                        // È un emoji o testo
+                        iconaHtml = `<span style="font-size:1.4rem;">${faucet.icona}</span>`;
+                    }
+                } else {
+                    // Icona di default
+                    iconaHtml = `<span style="font-size:1.2rem;">🪙</span>`;
+                }
+
+                card.innerHTML = `
+                    <div class="faucet-info">
+                        <div class="icona-sito">${iconaHtml}</div>
+                        <div class="testo">
+                            <a href="${faucet.url}" target="_blank" rel="noopener" class="nome">
+                                ${faucet.nome} <span style="font-size:0.7rem; color:#6a7f9e;">↗</span>
+                            </a>
+                            <div class="desc">${faucet.descrizione || ''}</div>
+                            <div class="tags">${tagsHtml}</div>
+                        </div>
+                    </div>
+                    <a href="${faucet.url}" target="_blank" rel="noopener" class="btn">Vai al sito</a>
+                `;
+
+                listContainer.appendChild(card);
+            });
+        })
+        .catch(() => {
+            document.getElementById('messaggioVuoto').style.display = 'block';
+            document.getElementById('faucetList').style.display = 'none';
+        });
+</script>
+
+</body>
+</html>
