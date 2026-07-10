@@ -1,0 +1,30 @@
+[
+    {
+        "nome": "Cointiply",
+        "url": "https://cointiply.mobi/r8KxE",
+        "descrizione": "Il faucet più famoso e affidabile. Reclama ogni ora, giochi, lotteria e offerte. Paga in BTC.",
+        "icona": "https://cointiply.com/favicon.ico",
+        "tags": ["⭐ TOP", "min 30k sat", "🎮 giochi", "🎰 lotteria"]
+    },
+    {
+        "nome": "Freecash",
+        "url": "https://freecash.com",
+        "descrizione": "Offerte, sondaggi e giochi. Prelievi da 0,50$ in BTC, PayPal e buoni regalo.",
+        "icona": "https://freecash.com/favicon.ico",
+        "tags": ["💰 min 0,50$", "PayPal", "offerte"]
+    },
+    {
+        "nome": "FireFaucet",
+        "url": "https://firefaucet.win",
+        "descrizione": "Reclama ogni 5 minuti, lotteria e mini-giochi integrati. Multi-cripto.",
+        "icona": "https://firefaucet.win/favicon.ico",
+        "tags": ["⏱️ ogni 5'", "lotteria", "multi-coin"]
+    },
+    {
+        "nome": "AllCoins",
+        "url": "https://allcoins.pw",
+        "descrizione": "Faucet per BTC, ETH, DOGE, LTC. Shortlink e offerwall.",
+        "icona": "https://allcoins.pw/favicon.ico",
+        "tags": ["🔄 multi-cripto", "shortlink"]
+    }
+]
