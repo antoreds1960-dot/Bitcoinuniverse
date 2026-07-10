@@ -5,6 +5,12 @@
         "descrizione": "Il faucet più famoso e affidabile. Reclama ogni ora, giochi, lotteria e offerte. Paga in BTC.",
         "icona": "https://cointiply.com/favicon.ico",
         "tags": ["⭐ TOP", "min 30k sat", "🎮 giochi", "🎰 lotteria"]
-    
+    },
+    {
+        "nome": "Coinbase",
+        "url": "https://coinbase.com/join/WGSUAM6?src=android-link",
+        "descrizione": "La piattaforma di scambio crypto più affidabile al mondo. Compra, vendi e guadagna interessi su Bitcoin, Ethereum e oltre 200 criptovalute.",
+        "icona": "https://coinbase.com/favicon.ico",
+        "tags": ["🏦 Exchange", "💰 bonus benvenuto", "🔒 sicuro", "📱 app"]
     }
-]
+    ]
